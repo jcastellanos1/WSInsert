@@ -1,15 +1,15 @@
 package com.edu.umg.wsinsert;
 
-import com.edu.umg.biblioteca.entity.autores;
-import com.edu.umg.biblioteca.entity.estudiantes;
-import com.edu.umg.biblioteca.entity.libros;
-import com.edu.umg.biblioteca.entity.prestamos;
-import com.edu.umg.biblioteca.entity.tipos;
-import com.edu.umg.bliblioteca.dao.AutorDAO;
-import com.edu.umg.bliblioteca.dao.EstudianteDAO;
-import com.edu.umg.bliblioteca.dao.LibroDAO;
-import com.edu.umg.bliblioteca.dao.PrestamoDAO;
-import com.edu.umg.bliblioteca.dao.TipoDAO;
+import com.edu.umg.DAO.AutorDAO;
+import com.edu.umg.DAO.EstudianteDAO;
+import com.edu.umg.DAO.LibroDAO;
+import com.edu.umg.DAO.PrestamosDAO;
+import com.edu.umg.DAO.TiposDAO;
+import com.edu.umg.Entity.Autor;
+import com.edu.umg.Entity.Estudiante;
+import com.edu.umg.Entity.Libro;
+import com.edu.umg.Entity.Prestamos;
+import com.edu.umg.Entity.Tipos;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -26,8 +26,8 @@ public class GenericResource {
     private AutorDAO autorDAO = new AutorDAO();
     private LibroDAO libroDAO = new LibroDAO();
     private EstudianteDAO estudianteDAO = new EstudianteDAO();
-    private PrestamoDAO prestamoDAO = new PrestamoDAO();
-    private TipoDAO tipoDAO = new TipoDAO();
+    private PrestamosDAO prestamoDAO = new PrestamosDAO();
+    private TiposDAO tipoDAO = new TiposDAO();
 
     public GenericResource() {
     }
@@ -37,15 +37,15 @@ public class GenericResource {
     @GET
     @Path("autores")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<autores> getAutores() {
-        return autorDAO.getAllAutores();
+    public List<Autor> getAutores() {
+        return autorDAO.getAll();
     }
 
     @GET
     @Path("autores/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAutorById(@PathParam("id") int id) {
-        autores autor = autorDAO.getAutorById(id);
+        Autor autor = autorDAO.getById(id);
         if (autor != null) {
             return Response.ok(autor).build();
         } else {
@@ -57,23 +57,23 @@ public class GenericResource {
     @Path("autores/agregar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addAutor(autores autor) {
-        autorDAO.addAutor(autor);
+    public Response addAutor(Autor autor) {
+        autorDAO.save(autor);
         return Response.status(Response.Status.CREATED).entity(autor).build();
     }//localhost:8080/WSInsert/ws/Insertar/autores/agregar
 
     @GET
     @Path("libros")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<libros> getLibros() {
-        return libroDAO.getAllLibros();
+    public List<Libro> getLibros() {
+        return libroDAO.getAll();
     }
 
     @GET
     @Path("libros/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getLibroById(@PathParam("id") int id) {
-        libros libro = libroDAO.getLibroById(id);
+        Libro libro = libroDAO.getById(Long.MIN_VALUE);
         if (libro != null) {
             return Response.ok(libro).build();
         } else {
@@ -85,8 +85,8 @@ public class GenericResource {
     @Path("libros/agregar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addLibro(libros libro) {
-        libroDAO.addLibro(libro);
+    public Response addLibro(Libro libro) {
+        libroDAO.save(libro);
         return Response.status(Response.Status.CREATED).entity(libro).build();
     }//localhost:8080/WSInsert/ws/Insertar/libros/agregar
 
@@ -94,15 +94,15 @@ public class GenericResource {
     @GET
     @Path("estudiantes")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<estudiantes> getEstudiantes() {
-        return estudianteDAO.getAllEstudiantes();
+        public List<Estudiante> getEstudiantes() {
+        return estudianteDAO.getAll();
     }
 
     @GET
     @Path("estudiantes/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEstudianteById(@PathParam("id") int id) {
-        estudiantes estudiante = estudianteDAO.getEstudianteById(id);
+            Estudiante estudiante = estudianteDAO.getById(id);
         if (estudiante != null) {
             return Response.ok(estudiante).build();
         } else {
@@ -114,8 +114,8 @@ public class GenericResource {
     @Path("estudiantes/agregar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addEstudiante(estudiantes estudiante) {
-        estudianteDAO.addEstudiante(estudiante);
+    public Response addEstudiante(Estudiante estudiante) {
+        estudianteDAO.save(estudiante);
         return Response.status(Response.Status.CREATED).entity(estudiante).build();
     }//localhost:8080/WSInsert/ws/Insertar/estudiantes/agregar
 
@@ -123,7 +123,7 @@ public class GenericResource {
     @GET
     @Path("prestamos")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<prestamos> getPrestamos() {
+    public List<Prestamos> getPrestamos() {
         return prestamoDAO.getAllPrestamos();
     }
 
@@ -131,7 +131,7 @@ public class GenericResource {
     @Path("prestamos/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPrestamoById(@PathParam("id") int id) {
-        prestamos prestamo = prestamoDAO.getPrestamoById(id);
+        Prestamos prestamo = prestamoDAO.getPrestamoById(Long.MIN_VALUE);
         if (prestamo != null) {
             return Response.ok(prestamo).build();
         } else {
@@ -143,8 +143,8 @@ public class GenericResource {
     @Path("prestamos/agregar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addPrestamo(prestamos prestamo) {
-        prestamoDAO.addPrestamo(prestamo);
+    public Response addPrestamo(Prestamos prestamo) {
+        prestamoDAO.savePrestamo(prestamo);
         return Response.status(Response.Status.CREATED).entity(prestamo).build();
     }//localhost:8080/WSInsert/ws/Insertar/prestamos/agregar
 
@@ -152,15 +152,15 @@ public class GenericResource {
     @GET
     @Path("tipos")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<tipos> getTipos() {
-        return tipoDAO.getAllTipos();
+    public List<Tipos> getTipos() {
+        return tipoDAO.getAll();
     }
 
     @GET
     @Path("tipos/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTipoById(@PathParam("id") int id) {
-        tipos tipo = tipoDAO.getTipoById(id);
+        Tipos tipo = tipoDAO.getById(id);
         if (tipo != null) {
             return Response.ok(tipo).build();
         } else {
@@ -172,8 +172,8 @@ public class GenericResource {
     @Path("tipos/agregar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addTipo(tipos tipo) {
-        tipoDAO.addTipo(tipo);
+    public Response addTipo(Tipos tipo) {
+        tipoDAO.save(tipo);
         return Response.status(Response.Status.CREATED).entity(tipo).build();
     }//localhost:8080/WSInsert/ws/Insertar/tipos/agregar
 
