@@ -22,14 +22,13 @@
         <version>7.0</version>
         <scope>provided</scope>
     </dependency>
-
-  <dependency>
-            <groupId>com.edu.umg</groupId>
-            <artifactId>DependenciaDAO</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
     
+     <dependency>
+        <groupId>com.edu.umg</groupId>
+        <artifactId>DependenciasBackend</artifactId>
+        <version>1.0-SNAPSHOT</version>
+       <type>jar</type>
+     </dependency>
     <!-- Hibernate Core -->
     <dependency>
         <groupId>org.hibernate</groupId>
@@ -137,7 +136,7 @@
         </repository>
         <repository>
             <id>archiva-repo</id>
-            <url>http://192.168.191.153:8080/repository/biblioteca-repo</url>
+            <url>http://192.168.191.153:8080/repository/biblioteca-repo/</url>
         </repository>
     </repositories>
 </project>
